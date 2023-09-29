@@ -9,8 +9,8 @@ com\mycompany\attendancetracker\shared\CrossPlatformUtilities.class
 com\mycompany\attendancetracker\data\DatabaseHandler.class
 com\mycompany\attendancetracker\network\ApiClient.class
 com\mycompany\attendancetracker\attendance\AttendanceManager.class
-com\mycompany\attendancetracker\data\AttendanceDatabase.class
 com\mycompany\attendancetracker\shared\Constants.class
+com\mycompany\attendancetracker\data\DatabaseConnector.class
 com\mycompany\attendancetracker\ui\dialog\QRScannerDialog.class
 com\mycompany\attendancetracker\ui\activities\ScanQRActivity.class
 com\mycompany\attendancetracker\user\User.class

@@ -68,6 +68,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **Swing:** modern and platform-independent GUI library that offers a richer set of customizable components
 - **PostgreSQL:** powerful and versatile relational database management system 
 - **pgAdmin4:** pgAdmin is a management tool for PostgreSQL and derivative relational databases such as EnterpriseDB's EDB Advanced Server
+- **JDBC Driver:** JDBC (Java Database Connectivity) is a Java-based API that allows Java applications to interact with databases. PostgreSQL JDBC driver (often referred to as pgjdbc).
 
 ## Customization
 
@@ -76,6 +77,20 @@ ClassFlow is designed to be highly customizable. You can tailor the app to your 
 - **Branding:** Change the app's name, logo, and color scheme to match your organization's branding.
 - **Localization:** Customize the app for different languages and regions.
 - **Features:** Extend or modify the app's functionality to fit your unique use case.
+
+## References
+
+- [ChatGPT by OpenAI](https://www.openai.com/research/chatgpt)
+  - The GOAT of Artificial Intelligence.
+
+- [For Dummies](https://deadgawk.notion.site/ClassFlow-QR-Based-Attendance-Tracking-App-7e6b84cc3b3948cb847678906e833c94?pvs=4)
+  - Like the name suggests.
+
+- [PostgreSQL Commands](https://deadgawk.notion.site/PostgreSQL-Commands-c190b7c5408347fe99e494f2545c020a?pvs=4)
+  - Takes you to a Notion article that explains briefly about the various commands used in Postgre and Sequel.
+
+- [GitHub - Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
+  - GitHub's guide on mastering Markdown was a valuable resource for understanding Markdown syntax.
 
 ## Contributing
 

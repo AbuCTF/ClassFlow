@@ -29,5 +29,5 @@ C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancet
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\shared\AppConfig.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\UserProfileActivity.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\MainActivity.java
-C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\data\AttendanceDatabase.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\attendance\AttendanceReportGenerator.java
+C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\data\DatabaseConnector.java
