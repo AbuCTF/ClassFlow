@@ -27,10 +27,15 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 
 ### Prerequisites
 
-- Android Studio: Ensure you have Android Studio installed for development and testing.
-- Android Device or Emulator: You need an Android device or emulator to run the app.
-- Java 11 LTS
-- Netbeans IDE
+- Android Studio
+- Android Device or Emulator
+- java 11 LTS
+- netbeans IDE
+- zxing 3.5.2
+- postgreSQL 42.6.0
+- bcrypt 0.4
+- passwdqc 2.0.3 (optional)
+- cygwin 3.4.9 (optional)
 
 ### Steps
 
@@ -69,6 +74,9 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **PostgreSQL:** powerful and versatile relational database management system 
 - **pgAdmin4:** pgAdmin is a management tool for PostgreSQL and derivative relational databases such as EnterpriseDB's EDB Advanced Server
 - **JDBC Driver:** JDBC (Java Database Connectivity) is a Java-based API that allows Java applications to interact with databases. PostgreSQL JDBC driver (often referred to as pgjdbc).
+- **BCrypt:** jBCrypt is a Java™ implementation of OpenBSD's Blowfish password hashing code.
+- **passwdqc:** passwdqc is a password/passphrase strength checking and policy enforcement toolset.
+- **Cygwin:** Cygwin is a Unix-like environment for Windows including CLI.
 
 ## Customization
 
@@ -91,6 +99,12 @@ ClassFlow is designed to be highly customizable. You can tailor the app to your 
 
 - [GitHub - Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
   - GitHub's guide on mastering Markdown was a valuable resource for understanding Markdown syntax.
+
+- [BCrypt](https://www.mindrot.org/projects/jBCrypt/)
+  - jBCrypt is a Java™ implementation of OpenBSD's Blowfish password hashing code.
+
+- [passwdqc](https://www.openwall.com/passwdqc/)
+  - passwdqc is a password/passphrase strength checking and policy enforcement toolset.
 
 ## Contributing
 
