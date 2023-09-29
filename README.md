@@ -67,6 +67,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **AWT (Abstract Window Toolkit):** Java's original GUI library with platform-dependent components
 - **Swing:** modern and platform-independent GUI library that offers a richer set of customizable components
 - **PostgreSQL:** powerful and versatile relational database management system 
+- **pgAdmin4:** pgAdmin is a management tool for PostgreSQL and derivative relational databases such as EnterpriseDB's EDB Advanced Server
 
 ## Customization
 

@@ -8,6 +8,6 @@ package com.mycompany.attendancetracker.data;
  *
  * @author USER
  */
-public class AttendanceDatabase {
+public class DatabaseConnector {
     
 }
