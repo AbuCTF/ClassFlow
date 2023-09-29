@@ -64,6 +64,9 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **ZXing (Zebra Crossing):** We utilize the ZXing library for QR code generation and scanning, making QR-based attendance tracking possible.
 - **NetBeans IDE:** Some components of the project are developed using NetBeans IDE, especially for the server-side and web components.
 - **Emulators:** During development and testing, Android emulators are used to simulate various Android devices and OS versions.
+- **AWT (Abstract Window Toolkit):** Java's original GUI library with platform-dependent components
+- **Swing:** modern and platform-independent GUI library that offers a richer set of customizable components
+- **PostgreSQL:** powerful and versatile relational database management system 
 
 ## Customization
 
