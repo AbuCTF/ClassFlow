@@ -25,7 +25,7 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
-                System.out.println("Welcome to Attendance Tracker");
+                System.out.println("Welcome to ClassFlow - QR Based Attendance Tracking");
                 System.out.println("1. Register");
                 System.out.println("2. Login");
                 System.out.println("3. Exit");
