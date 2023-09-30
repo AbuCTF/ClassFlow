@@ -6,6 +6,7 @@ C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancet
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\adapters\AttendanceListAdapter.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\attendance\AttendanceManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\qr\QRCodeUtil.java
+C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserLoginManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\app\Main.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\auth\AuthManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\data\DatabaseHandler.java
@@ -17,6 +18,7 @@ C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancet
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\attendance\AttendanceService.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\ScanQRActivity.java
+C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserRegistrationManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\fragments\UserListFragment.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\utilities\DateTimeUtils.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\shared\CrossPlatformUtilities.java

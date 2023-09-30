@@ -1,3 +1,4 @@
+trial\VerifyPasswordExample.class
 trial\BCryptExample$HashedPasswordResult.class
-trial\BCryptExample.class
 trial\JDBCConnectivityTest.class
+trial\BCryptExample.class

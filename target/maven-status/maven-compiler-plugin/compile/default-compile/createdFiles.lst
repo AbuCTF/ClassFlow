@@ -12,6 +12,7 @@ com\mycompany\attendancetracker\attendance\AttendanceManager.class
 com\mycompany\attendancetracker\shared\Constants.class
 com\mycompany\attendancetracker\data\DatabaseConnector.class
 com\mycompany\attendancetracker\ui\dialog\QRScannerDialog.class
+com\mycompany\attendancetracker\user\UserLoginManager.class
 com\mycompany\attendancetracker\ui\activities\ScanQRActivity.class
 com\mycompany\attendancetracker\user\User.class
 com\mycompany\attendancetracker\auth\AuthResponse.class
@@ -31,3 +32,4 @@ com\mycompany\attendancetracker\ui\utilities\UIUtils.class
 com\mycompany\attendancetracker\ui\fragments\AttendanceFragment.class
 com\mycompany\attendancetracker\ui\activities\UserProfileActivity.class
 com\mycompany\attendancetracker\ui\adapters\UserListAdapter.class
+com\mycompany\attendancetracker\user\UserRegistrationManager.class
