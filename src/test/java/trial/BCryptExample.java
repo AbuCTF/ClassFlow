@@ -13,13 +13,13 @@ import org.mindrot.jbcrypt.BCrypt;
 public class BCryptExample {
     public static void main(String[] args) {
         // Example plaintext password
-        String plaintextPassword = "MySecretPassword123";
+        String plaintextPassword = "P@ss123!";
 
         // Hash the password
         HashedPasswordResult hashedResult = hashPassword(plaintextPassword);
 
         // Check if a provided password matches the stored hash
-        boolean passwordMatches = checkPassword("MySecretPassword123", hashedResult.getHashedPassword());
+        boolean passwordMatches = checkPassword("P@ss123!", hashedResult.getHashedPassword());
 
         if (passwordMatches) {
             System.out.println("Password matches!");
