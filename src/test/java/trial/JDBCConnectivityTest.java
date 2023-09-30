@@ -18,7 +18,7 @@ public class JDBCConnectivityTest {
     public static void main(String[] args) {
         String url = "jdbc:postgresql://localhost:5432/trial";
         String user = "postgres";
-        String password = "Miniclip123321@#";
+        String password = "P@ss123!";
         
         Connection connection = null;
 
