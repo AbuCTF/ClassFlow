@@ -13,6 +13,7 @@ import com.mycompany.attendancetracker.data.DatabaseHandler;
 import com.mycompany.attendancetracker.user.UserLoginManager;
 import com.mycompany.attendancetracker.user.UserRegistrationManager;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -31,55 +32,67 @@ public class Main {
                 System.out.println("3. Exit");
                 System.out.print("Enter your choice: ");
 
-                int choice = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                try {
+                    int choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
 
-                switch (choice) {
-                    case 1 -> {
-                        // User Registration
-                        System.out.println("User Registration");
-                        System.out.print("Enter username: ");
-                        String regUsername = scanner.nextLine();
-                        System.out.print("Enter password: ");
-                        String regPassword = scanner.nextLine();
-                        
-                        int maxUsers = 10; // Set your registration limit here
+                    switch (choice) {
+                        case 1 -> {
+                            // User Registration
+                            System.out.println("User Registration");
+                            System.out.print("Enter username: ");
+                            String regUsername = scanner.nextLine();
+                            System.out.print("Enter password: ");
+                            String regPassword = scanner.nextLine();
+                            System.out.print("Enter email: ");
+                            String regEmail = scanner.nextLine();
 
-                        boolean registrationResult = registrationManager.registerUser(regUsername, regPassword, maxUsers);
+                            int maxUsers = 10; // Set your registration limit here
 
-                        if (registrationResult) {
-                            System.out.println("User registered successfully!");
-                        } else {
-                            System.out.println("User registration failed. Registration limit reached or other error.");
+                            boolean registrationResult = registrationManager.registerUser(regUsername, regPassword, regEmail, maxUsers);
+
+                            if (registrationResult) {
+                                System.out.println("User registered successfully!");
+                            } else {
+                                if (registrationManager.isCommonPassword(regPassword)) {
+                                    System.out.println("User registration failed. Common password detected.");
+                                } else {
+                                    System.out.println("User registration failed. Registration limit reached or other error.");
+                                }
+                            }
                         }
-                    }
 
-                    case 2 -> {
-                        // User Login
-                        System.out.println("User Login");
-                        System.out.print("Enter username: ");
-                        String loginUsername = scanner.nextLine();
-                        System.out.print("Enter password: ");
-                        String loginPassword = scanner.nextLine();
 
-                        boolean loginResult = loginManager.loginUser(loginUsername, loginPassword);
+                        case 2 -> {
+                            // User Login
+                            System.out.println("User Login");
+                            System.out.print("Enter username: ");
+                            String loginUsername = scanner.nextLine();
+                            System.out.print("Enter password: ");
+                            String loginPassword = scanner.nextLine();
 
-                        if (loginResult) {
-                            System.out.println("Login successful!");
-                        } else {
-                            System.out.println("Login failed. Invalid username or password.");
+                            boolean loginResult = loginManager.loginUser(loginUsername, loginPassword);
+
+                            if (loginResult) {
+                                System.out.println("Login successful!");
+                            } else {
+                                System.out.println("Login failed. Invalid username or password.");
+                            }
                         }
-                    }
 
-                    case 3 -> {
-                        // Exit the program
-                        System.out.println("Exiting Attendance Tracker.");
-                        databaseHandler.close();
-                        scanner.close();
-                        System.exit(0);
-                    }
+                        case 3 -> {
+                            // Exit the program
+                            System.out.println("Exiting Attendance Tracker.");
+                            databaseHandler.close();
+                            scanner.close();
+                            System.exit(0);
+                        }
 
-                    default -> System.out.println("Invalid choice. Please select a valid option.");
+                        default -> System.out.println("Invalid choice. Please select a valid option.");
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                    scanner.nextLine(); // Clear the invalid input
                 }
             }
         } catch (Exception e) {
