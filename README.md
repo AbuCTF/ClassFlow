@@ -77,6 +77,9 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **BCrypt:** jBCrypt is a Java™ implementation of OpenBSD's Blowfish password hashing code.
 - **passwdqc:** passwdqc is a password/passphrase strength checking and policy enforcement toolset.
 - **Cygwin:** Cygwin is a Unix-like environment for Windows including CLI.
+- **7-Zip:** 7-Zip is a file archiver with a high compression ratio. Makes Repositories password-protected.
+- **SHA-256:** SHA-256 is a cryptographic hash function.
+- **Advanced Encryption Standard (AES):** AES is a widely used encryption algorithm.
 
 ## Customization
 
