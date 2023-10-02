@@ -2,13 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package trial;
+package trial.encrypt;
 
 /**
  *
  * @author Abdur
  */
 import org.mindrot.jbcrypt.BCrypt;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class BCryptExample {
     public static void main(String[] args) {
@@ -60,5 +64,14 @@ public class BCryptExample {
     // Check if a provided password matches the stored hash
     public static boolean checkPassword(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
+    }
+    // Save the hashed password to admin_key.txt
+    public static void saveHashedPasswordToAdminKeyFile(String hashedPassword) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("admin_key.txt"))) {
+            writer.write(hashedPassword);
+            System.out.println("Hashed password saved to admin_key.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

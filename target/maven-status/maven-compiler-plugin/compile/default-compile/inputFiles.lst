@@ -12,10 +12,10 @@ C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancet
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\data\DatabaseHandler.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\qr\QRCodeScanner.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\dialog\QRScannerDialog.java
+C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\security\EncryptionUtil.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\SettingsActivity.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\ViewAttendanceActivity.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\auth\AuthResponse.java
-C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\attendance\AttendanceService.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\activities\ScanQRActivity.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserRegistrationManager.java

@@ -21,13 +21,13 @@ com\mycompany\attendancetracker\network\ApiService.class
 com\mycompany\attendancetracker\ui\activities\MainActivity.class
 com\mycompany\attendancetracker\attendance\AttendanceService.class
 com\mycompany\attendancetracker\app\AttendanceTrackerApp.class
+com\mycompany\attendancetracker\security\EncryptionUtil.class
 com\mycompany\attendancetracker\app\Main.class
 com\mycompany\attendancetracker\attendance\AttendanceRecord.class
 com\mycompany\attendancetracker\attendance\AttendanceReportGenerator.class
 com\mycompany\attendancetracker\ui\utilities\DateTimeUtils.class
 com\mycompany\attendancetracker\auth\AuthHandler.class
 com\mycompany\attendancetracker\auth\AuthManager.class
-com\mycompany\attendancetracker\user\UserManager.class
 com\mycompany\attendancetracker\ui\utilities\UIUtils.class
 com\mycompany\attendancetracker\ui\fragments\AttendanceFragment.class
 com\mycompany\attendancetracker\ui\activities\UserProfileActivity.class
