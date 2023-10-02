@@ -1,7 +1,7 @@
 # ClassFlow
 # ClassFlow - QR Based Attendance Tracking App
 
-ClassFlow is a user-friendly Android app designed to simplify attendance tracking in educational institutions and events using QR codes. With ClassFlow, you can easily create and manage attendance sessions, allowing participants to check in quickly and efficiently. This README provides detailed information about the app, including features, installation, usage, and customization.
+ClassFlow is a user-friendly application designed to simplify attendance tracking in educational institutions and events using QR codes. With ClassFlow, you can easily create and manage attendance sessions, allowing participants to check in quickly and efficiently. This README provides detailed information about the app, including features, installation, usage, and customization.
 
 ## Table of Contents
 
