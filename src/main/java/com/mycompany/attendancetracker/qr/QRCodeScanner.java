@@ -2,51 +2,74 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.attendancetracker.qr;
 
 /**
  *
  * @author Abdur
  */
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
+package com.mycompany.attendancetracker.qr;
+
+import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import javax.imageio.ImageIO;
 
 public class QRCodeScanner {
+    public static void main(String[] args) throws ChecksumException, FormatException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the path to the QR code image: ");
+        String imagePath = scanner.nextLine();
+        scanner.close();
 
-    public static String scanQRCode(String filePath) {
         try {
-            File file = new File(filePath);
-            BufferedImage image = ImageIO.read(file);
+            System.out.println("Scanning QR code...");
+            FileInputStream inputStream = new FileInputStream(new File(imagePath));
+            BufferedImage bufferedImage = ImageIO.read(inputStream);
+            LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-            BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(image)));
-            Result result = new MultiFormatReader().decode(binaryBitmap);
+            QRCodeReader reader = new QRCodeReader();
+            Result result = reader.decode(bitmap);
 
-            if (result != null) {
-                return result.getText();
+            String scannedContent = result.getText();
+
+            // Split the scanned content into its components
+            String[] components = scannedContent.split("\\|");
+            if (components.length == 1) {
+                String secretKey = components[0];
+
+                String expectedSecretKey = readSecretKeyFromFile("C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\files\\secret_key.txt");
+
+                if (secretKey.equals(expectedSecretKey)) {
+                    System.out.println("QR code successfully verified. Content matches the secret key.");
+                } else {
+                    System.out.println("QR code verification failed. Content does not match the secret key.");
+                }
+            } else {
+                System.out.println("Invalid QR code content format.");
             }
-        } catch (IOException | NotFoundException e) {
+        } catch (NotFoundException | IOException e) {
+            System.out.println("QR code verification failed. An error occurred.");
+            e.printStackTrace();
         }
-
-        return null; // Return null if QR code not found or an error occurred
     }
 
-    public static void main(String[] args) {
-        String filePath = "C:\\Documents2\\SemiTrash\\QR.png"; // Replace with the path to your QR code image
-        String qrCodeData = scanQRCode(filePath);
-
-        if (qrCodeData != null) {
-            System.out.println("QR Code Data: " + qrCodeData);
-        } else {
-            System.out.println("QR Code not found or an error occurred.");
+    private static String readSecretKeyFromFile(String filePath) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch (IOException e) {
+            System.out.println("QR code verification failed. An error occurred while reading the secret key file.");
+            e.printStackTrace();
+            return null;
         }
     }
 }
+
+
