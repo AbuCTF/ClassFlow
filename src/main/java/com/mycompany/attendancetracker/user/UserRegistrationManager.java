@@ -42,6 +42,20 @@ public class UserRegistrationManager {
         return false; // Registration failed
     }
 
+    public boolean deleteUserWithConfirmation(String username, String adminPassword) {
+        // Prompt for the administrator's password
+        if (!isPasswordCorrect(adminPassword)) {
+            return false; // Password is incorrect
+        }
+
+        // Proceed with user deletion
+        if (deleteUser(username)) {
+            return true; // User deleted successfully
+        }
+
+        return false; // Deletion failed
+    }
+
     private boolean isUsernameValid(String username) {
         return Pattern.matches("^[a-zA-Z]+$", username);
     }
@@ -102,18 +116,37 @@ public class UserRegistrationManager {
         return false;
     }
 
-    public boolean isCommonPassword(String password) {
-    try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Documents2\\Drops\\commonPasswords100k.txt"))) {
-        String line;
-        while ((line = reader.readLine()) != null) {
-            if (line.trim().equalsIgnoreCase(password)) {
-                return true; // Password is in the common password list
-            }
+    private boolean isPasswordCorrect(String enteredPassword) {
+        String adminPassword = "adminPassword"; // Replace with the actual administrator's password
+        return enteredPassword.equals(adminPassword);
+    }
+
+   private boolean deleteUser(String username) {
+    try (Connection connection = DatabaseConnector.connect()) {
+        String deleteQuery = "DELETE FROM users WHERE username = ?";
+        try (PreparedStatement deleteStatement = connection.prepareStatement(deleteQuery)) {
+            deleteStatement.setString(1, username);
+            int rowsAffected = deleteStatement.executeUpdate();
+            return rowsAffected == 1; // If 1 row was affected, deletion was successful
         }
-    } catch (IOException e) {
+    } catch (SQLException e) {
         e.printStackTrace();
     }
-    return false; // Password is not in the common password list
+    return false; // Deletion failed
 }
+   
 
+    public boolean isCommonPassword(String password) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("C:\\Documents2\\Drops\\commonPasswords100k.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().equalsIgnoreCase(password)) {
+                    return true; // Password is in the common password list
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false; // Password is not in the common password list
+    }
 }
