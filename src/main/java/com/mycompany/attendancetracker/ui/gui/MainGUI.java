@@ -2,6 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
+/**
+ *
+ * @author Abdur
+ */
 package com.mycompany.attendancetracker.ui.gui;
 
 import com.mycompany.attendancetracker.user.UserRegistrationManager;
@@ -12,7 +16,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
 
@@ -42,10 +45,15 @@ public class MainGUI extends Application {
         PasswordField regPasswordInput = new PasswordField();
         GridPane.setConstraints(regPasswordInput, 1, 1);
 
-        Button registerButton = new Button("Register");
-        GridPane.setConstraints(registerButton, 1, 2);
+        Label regEmailLabel = new Label("Email:");
+        GridPane.setConstraints(regEmailLabel, 0, 2);
+        TextField regEmailInput = new TextField();
+        GridPane.setConstraints(regEmailInput, 1, 2);
 
-        registrationForm.getChildren().addAll(regUsernameLabel, regUsernameInput, regPasswordLabel, regPasswordInput, registerButton);
+        Button registerButton = new Button("Register");
+        GridPane.setConstraints(registerButton, 1, 3);
+
+        registrationForm.getChildren().addAll(regUsernameLabel, regUsernameInput, regPasswordLabel, regPasswordInput, regEmailLabel, regEmailInput, registerButton);
 
         // Create a login form
         GridPane loginForm = new GridPane();
@@ -68,7 +76,23 @@ public class MainGUI extends Application {
 
         loginForm.getChildren().addAll(loginUsernameLabel, loginUsernameInput, loginPasswordLabel, loginPasswordInput, loginButton);
 
-        // Create a tabbed layout for registration and login
+        // Create a delete user form
+        GridPane deleteUserForm = new GridPane();
+        deleteUserForm.setPadding(new Insets(20, 20, 20, 20));
+        deleteUserForm.setVgap(8);
+        deleteUserForm.setHgap(10);
+
+        Label deleteUserLabel = new Label("Delete User:");
+        GridPane.setConstraints(deleteUserLabel, 0, 0);
+        TextField deleteUserInput = new TextField();
+        GridPane.setConstraints(deleteUserInput, 1, 0);
+
+        Button deleteUserButton = new Button("Delete User");
+        GridPane.setConstraints(deleteUserButton, 1, 1);
+
+        deleteUserForm.getChildren().addAll(deleteUserLabel, deleteUserInput, deleteUserButton);
+
+        // Create a tabbed layout for registration, login, and delete user
         TabPane tabPane = new TabPane();
 
         Tab regTab = new Tab("Register");
@@ -77,15 +101,21 @@ public class MainGUI extends Application {
         Tab loginTab = new Tab("Login");
         loginTab.setContent(loginForm);
 
-        tabPane.getTabs().addAll(regTab, loginTab);
+        Tab deleteUserTab = new Tab("Delete User");
+        deleteUserTab.setContent(deleteUserForm);
+
+        tabPane.getTabs().addAll(regTab, loginTab, deleteUserTab);
 
         Scene scene = new Scene(tabPane, 400, 250);
         primaryStage.setScene(scene);
 
+        primaryStage.show();
+
         registerButton.setOnAction(e -> {
             String username = regUsernameInput.getText();
             String password = regPasswordInput.getText();
-            boolean registrationResult = registerUser(username, password);
+            String email = regEmailInput.getText();
+            boolean registrationResult = registerUser(username, password, email);
             showRegistrationResultAlert(registrationResult);
         });
 
@@ -96,12 +126,17 @@ public class MainGUI extends Application {
             showLoginResultAlert(loginResult);
         });
 
+        deleteUserButton.setOnAction(e -> {
+            String username = deleteUserInput.getText();
+            boolean deleteResult = deleteUser(username);
+            showDeleteResultAlert(deleteResult);
+        });
+
         primaryStage.show();
     }
 
-    private boolean registerUser(String username, String password) {
+    private boolean registerUser(String username, String password, String email) {
         UserRegistrationManager registrationManager = new UserRegistrationManager();
-        String email = "user@example.com"; // Replace with user input or leave as a default
         int maxUsers = 10; // Set your registration limit here
 
         return registrationManager.registerUser(username, password, email, maxUsers);
@@ -110,6 +145,12 @@ public class MainGUI extends Application {
     private boolean loginUser(String username, String password) {
         UserLoginManager loginManager = new UserLoginManager();
         return loginManager.loginUser(username, password);
+    }
+
+    private boolean deleteUser(String username) {
+        // Implementation of user deletion logic
+        // You can call your delete user logic here
+        return false; // Update the return value based on the actual deletion result
     }
 
     private void showRegistrationResultAlert(boolean registrationResult) {
@@ -125,6 +166,14 @@ public class MainGUI extends Application {
             showAlert("Login Successful", "Login successful!");
         } else {
             showAlert("Login Failed", "Invalid username or password.");
+        }
+    }
+
+    private void showDeleteResultAlert(boolean deleteResult) {
+        if (deleteResult) {
+            showAlert("Delete User Successful", "User deleted successfully!");
+        } else {
+            showAlert("Delete User Failed", "User deletion failed.");
         }
     }
 
