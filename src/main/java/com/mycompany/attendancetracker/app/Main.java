@@ -29,7 +29,8 @@ public class Main {
                 System.out.println("Welcome to ClassFlow - QR Based Attendance Tracking");
                 System.out.println("1. Register");
                 System.out.println("2. Login");
-                System.out.println("3. Exit");
+                System.out.println("3. Delete User");
+                System.out.println("4. Exit");
                 System.out.print("Enter your choice: ");
 
                 try {
@@ -62,7 +63,6 @@ public class Main {
                             }
                         }
 
-
                         case 2 -> {
                             // User Login
                             System.out.println("User Login");
@@ -81,6 +81,23 @@ public class Main {
                         }
 
                         case 3 -> {
+                            // Delete User
+                            System.out.println("Delete User");
+                            System.out.print("Enter username to delete: ");
+                            String usernameToDelete = scanner.nextLine();
+                            System.out.print("Enter admin password: ");
+                            String adminPassword = scanner.nextLine();
+
+                            boolean deletionResult = registrationManager.deleteUserWithConfirmation(usernameToDelete, adminPassword);
+
+                            if (deletionResult) {
+                                System.out.println("User deleted successfully!");
+                            } else {
+                                System.out.println("User deletion failed. User not found or other error.");
+                            }
+                        }
+
+                        case 4 -> {
                             // Exit the program
                             System.out.println("Exiting Attendance Tracker.");
                             databaseHandler.close();
@@ -98,5 +115,10 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean deleteUser(String username) {
+        // Implement your user deletion logic here (as described in the previous answer)
+        return false; // Return true if user deletion was successful, false otherwise
     }
 }
