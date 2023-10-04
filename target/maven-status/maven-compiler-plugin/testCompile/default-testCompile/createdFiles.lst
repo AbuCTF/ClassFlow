@@ -1,6 +1,0 @@
-trial\VerifyPasswordExample.class
-trial\BCryptExample$HashedPasswordResult.class
-trial\JDBCConnectivityTest.class
-trial\QRCodeGenerator.class
-trial\UniqueQRCodeGenerator.class
-trial\BCryptExample.class

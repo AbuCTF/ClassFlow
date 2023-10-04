@@ -14,6 +14,7 @@ com\mycompany\attendancetracker\data\DatabaseConnector.class
 com\mycompany\attendancetracker\ui\dialog\QRScannerDialog.class
 com\mycompany\attendancetracker\user\UserLoginManager.class
 com\mycompany\attendancetracker\ui\activities\ScanQRActivity.class
+com\mycompany\attendancetracker\ui\gui\MainGUI.class
 com\mycompany\attendancetracker\user\User.class
 com\mycompany\attendancetracker\auth\AuthResponse.class
 com\mycompany\attendancetracker\qr\QRCodeScanner.class

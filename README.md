@@ -36,6 +36,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - bcrypt 0.4
 - passwdqc 2.0.3 (optional)
 - cygwin 3.4.9 (optional)
+- javafx 21
 
 ### Steps
 
@@ -80,6 +81,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **7-Zip:** 7-Zip is a file archiver with a high compression ratio. Makes Repositories password-protected.
 - **SHA-256:** SHA-256 is a cryptographic hash function.
 - **Advanced Encryption Standard (AES):** AES is a widely used encryption algorithm.
+- **JavaFX:** JavaFX is a software platform for creating and delivering desktop applications, as well as rich web applications that can run across a wide variety of devices.
 
 ## Customization
 
@@ -108,6 +110,9 @@ ClassFlow is designed to be highly customizable. You can tailor the app to your 
 
 - [passwdqc](https://www.openwall.com/passwdqc/)
   - passwdqc is a password/passphrase strength checking and policy enforcement toolset.
+
+- [SecLists ](https://github.com/danielmiessler/SecLists/tree/master)
+  - SecLists is the security tester's companion.
 
 ## Contributing
 
