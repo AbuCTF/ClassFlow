@@ -82,6 +82,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **SHA-256:** SHA-256 is a cryptographic hash function.
 - **Advanced Encryption Standard (AES):** AES is a widely used encryption algorithm.
 - **JavaFX:** JavaFX is a software platform for creating and delivering desktop applications, as well as rich web applications that can run across a wide variety of devices.
+- **JWT (JSON Web Token):** SON Web Token is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims.
 
 ## Customization
 
@@ -113,6 +114,9 @@ ClassFlow is designed to be highly customizable. You can tailor the app to your 
 
 - [SecLists ](https://github.com/danielmiessler/SecLists/tree/master)
   - SecLists is the security tester's companion.
+
+- [JWT ](https://github.com/auth0/java-jwt)
+  - JSON Web Token is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims.
 
 ## Contributing
 
