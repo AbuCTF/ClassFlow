@@ -9,6 +9,8 @@
 
 package com.mycompany.attendancetracker.user;
 
+import com.mycompany.attendancetracker.auth.AuthHandler;
+import com.mycompany.attendancetracker.auth.AuthManager;
 import com.mycompany.attendancetracker.data.DatabaseConnector;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -23,9 +25,16 @@ public class UserLoginManager {
         // Retrieve the hashed password from the database for the given username
         String hashedPasswordFromDB = getHashedPasswordFromDatabase(username);
 
-        if (hashedPasswordFromDB != null) {
-            // Check if the entered password matches the hashed password from the database
-            return BCrypt.checkpw(password, hashedPasswordFromDB);
+        // Check if the entered password matches the hashed password from the database
+        if (hashedPasswordFromDB != null && BCrypt.checkpw(password, hashedPasswordFromDB)) {
+            // Upon successful login, generate an authentication token.
+            String authToken = AuthHandler.generateToken(username);
+
+            // Transfer control to AuthManager to set the token and update login status.
+            AuthManager.setAuthToken(authToken);
+            AuthManager.setLoggedIn(true);
+
+            return true; // Login successful
         }
 
         return false; // Login failed (username not found or incorrect password)
@@ -47,4 +56,5 @@ public class UserLoginManager {
         return null; // User not found in the database
     }
 }
+
 
