@@ -26,7 +26,7 @@ public class QRCodeScanner {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the path to the QR code image: ");
         String imagePath = scanner.nextLine();
-        scanner.close();
+        //scanner.close();
 
         try {
             System.out.println("Scanning QR code...");

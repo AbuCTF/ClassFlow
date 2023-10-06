@@ -40,11 +40,12 @@ public class QRCodeGenerator {
 
             String secretKeyContents = readSecretKeyFromFile("C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\files\\secret_key.txt");
 
+            // Get the file path to save the QR code
+            System.out.print("Enter the file path to save the QR code (e.g., C:\\path\\to\\save\\qrcode.png): ");
+            String outputFilePath = scanner.nextLine();
+
             // Generate a UUID based on the secret key contents
             String generatedUUID = generateUniqueUUID(secretKeyContents);
-
-            // Save the generated UUID to a file
-            saveUUIDToFile(generatedUUID, "C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\images\\UUID\\GenUUID.txt");
 
             // Display the contents of the secret key and generated UUID
             System.out.println("Secret Key Contents: " + secretKeyContents);
@@ -71,7 +72,7 @@ public class QRCodeGenerator {
             frame.pack();
             frame.setVisible(true);
 
-            String outputFilePath = "C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\images\\qrcodes\\qrcode01.png";
+            // Save the QR code to the specified file
             MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File(outputFilePath).toPath());
             System.out.println("QR code saved to: " + outputFilePath);
         } catch (WriterException | IOException e) {
@@ -89,14 +90,6 @@ public class QRCodeGenerator {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    private static void saveUUIDToFile(String uuid, String filePath) {
-        try {
-            Files.write(Paths.get(filePath), uuid.getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -9,6 +9,8 @@
 
 package com.mycompany.attendancetracker.app;
 
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
 import com.mycompany.attendancetracker.qr.QRCodeGenerator;
 import com.mycompany.attendancetracker.qr.QRCodeScanner;
 
@@ -134,11 +136,13 @@ public class Main {
                             // Generate QR
                             // Add your QR code generation code here
                             System.out.println("Generating QR...");
+                            QRCodeGenerator.main(new String[]{});
                         }
                         case 3 -> {
                             // Scan QR
                             // Add your QR code scanning code here
                             System.out.println("Scanning QR...");
+                            QRCodeScanner.main(new String[]{});
                         }
                         case 4 -> {
                             // Logout
@@ -150,7 +154,7 @@ public class Main {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (ChecksumException | FormatException e) {
             e.printStackTrace();
         }
     }
