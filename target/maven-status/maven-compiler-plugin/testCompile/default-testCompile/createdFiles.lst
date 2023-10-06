@@ -1,7 +1,0 @@
-trial\qr\QRCodeGenerator.class
-trial\qr\UniqueQRCodeGenerator.class
-trial\database\JDBCConnectivityTest.class
-trial\encrypt\BCryptExample.class
-trial\encrypt\BCryptExample$HashedPasswordResult.class
-trial\ui\SimpleJavaFXApp.class
-trial\encrypt\VerifyPasswordExample.class

@@ -17,13 +17,13 @@ import java.io.IOException;
 public class BCryptExample {
     public static void main(String[] args) {
         // Example plaintext password
-        String plaintextPassword = "P@ss123!";
+        String plaintextPassword = "danig";
 
         // Hash the password
         HashedPasswordResult hashedResult = hashPassword(plaintextPassword);
 
         // Check if a provided password matches the stored hash
-        boolean passwordMatches = checkPassword("P@ss123!", hashedResult.getHashedPassword());
+        boolean passwordMatches = checkPassword("danig", hashedResult.getHashedPassword());
 
         if (passwordMatches) {
             System.out.println("Password matches!");
