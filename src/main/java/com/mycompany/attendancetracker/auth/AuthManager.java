@@ -6,7 +6,7 @@ package com.mycompany.attendancetracker.auth;
 
 /**
  *
- * @author USER
+ * @author Abdur
  */
 public class AuthManager {
     private static String authToken;
@@ -14,6 +14,7 @@ public class AuthManager {
 
     public static void setAuthToken(String token) {
         authToken = token;
+        System.out.println("Authentication token set.");
     }
 
     public static String getAuthToken() {
@@ -22,6 +23,11 @@ public class AuthManager {
 
     public static void setLoggedIn(boolean status) {
         loggedIn = status;
+        if (loggedIn) {
+            System.out.println("User logged in.");
+        } else {
+            System.out.println("User logged out.");
+        }
     }
 
     public static boolean isLoggedIn() {

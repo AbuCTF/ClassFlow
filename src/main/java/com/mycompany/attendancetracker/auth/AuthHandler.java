@@ -6,7 +6,7 @@ package com.mycompany.attendancetracker.auth;
 
 /**
  *
- * @author USER
+ * @author Abdur
  */
 
 import io.jsonwebtoken.Claims;
@@ -21,17 +21,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AuthHandler {
     // The location of the file containing the secret key
-    private static final String SECRET_KEY_FILE_PATH = "secret_key.txt";
-    
+    private static final String SECRET_KEY_FILE_PATH = "C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\files\\secret_key.txt";
+
     // Token expiration time (e.g., 1 hour)
-    private static final long EXPIRATION_TIME = 3600000; 
-    
+    private static final long EXPIRATION_TIME = 3600000;
+
     private static final Set<String> revokedTokens = ConcurrentHashMap.newKeySet();
+    private static final Map<String, Date> tokenExpiry = new ConcurrentHashMap<>();
 
     public static String generateToken(String username) {
         Date now = new Date();
@@ -48,33 +50,45 @@ public class AuthHandler {
     }
 
     public static boolean validateToken(String token) {
-        try {
-            if (revokedTokens.contains(token)) {
-                return false; // Token is revoked
-            }
-            Jwts.parser().setSigningKey(getSecretKey()).parseClaimsJws(token);
-            return true; // Token is valid
-        } catch (ExpiredJwtException | MalformedJwtException | SignatureException | UnsupportedJwtException | IllegalArgumentException e) {
-            // Token validation failed
-            return false;
+        if (revokedTokens.contains(token)) {
+            return false; // Token is revoked
         }
-    }
 
-    public static void revokeToken(String token) {
-        revokedTokens.add(token);
-    }
-
-    public static String getUsernameFromToken(String token) {
         try {
             Claims claims = Jwts.parser()
                 .setSigningKey(getSecretKey())
                 .parseClaimsJws(token)
                 .getBody();
-            return claims.getSubject();
+            String username = claims.getSubject();
+            Date expiration = claims.getExpiration();
+
+            // Check if the token has expired
+            Date now = new Date();
+            if (expiration != null && expiration.after(now)) {
+                return true; // Token is valid
+            }
         } catch (ExpiredJwtException | MalformedJwtException | SignatureException | UnsupportedJwtException | IllegalArgumentException e) {
             // Token validation failed
-            return null;
         }
+
+        return false;
+    }
+
+    public static void revokeToken(String token) {
+        revokedTokens.add(token);
+        tokenExpiry.put(token, new Date());
+
+        // Clean up revoked tokens that are older than the token's expiration time
+        cleanUpRevokedTokens();
+    }
+
+    // Clean up revoked tokens that are older than the token's expiration time
+    private static void cleanUpRevokedTokens() {
+        Date now = new Date();
+        revokedTokens.removeIf(token -> {
+            Date revocationTime = tokenExpiry.get(token);
+            return revocationTime != null && now.getTime() - revocationTime.getTime() > EXPIRATION_TIME;
+        });
     }
 
     private static String getSecretKey() {

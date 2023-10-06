@@ -9,7 +9,11 @@
 
 package com.mycompany.attendancetracker.app;
 
-import com.mycompany.attendancetracker.data.DatabaseHandler;
+import com.mycompany.attendancetracker.qr.QRCodeGenerator;
+import com.mycompany.attendancetracker.qr.QRCodeScanner;
+
+import com.mycompany.attendancetracker.auth.AuthManager;
+import com.mycompany.attendancetracker.auth.AuthHandler;
 import com.mycompany.attendancetracker.user.UserLoginManager;
 import com.mycompany.attendancetracker.user.UserRegistrationManager;
 
@@ -18,22 +22,23 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
         UserRegistrationManager registrationManager = new UserRegistrationManager();
         UserLoginManager loginManager = new UserLoginManager();
+        String loggedInUsername = ""; // Store the logged-in username
 
         try {
             Scanner scanner = new Scanner(System.in);
 
             while (true) {
-                System.out.println("Welcome to ClassFlow - QR Based Attendance Tracking");
-                System.out.println("1. Register");
-                System.out.println("2. Login");
-                System.out.println("3. Delete User");
-                System.out.println("4. Exit");
-                System.out.print("Enter your choice: ");
+                if (!AuthManager.isLoggedIn()) {
+                    // Display the main menu for unauthenticated users
+                    System.out.println("Welcome to ClassFlow - QR Based Attendance Tracking");
+                    System.out.println("1. Register");
+                    System.out.println("2. Login");
+                    System.out.println("3. Delete User");
+                    System.out.println("4. Exit");
+                    System.out.print("Enter your choice: ");
 
-                try {
                     int choice = scanner.nextInt();
                     scanner.nextLine(); // Consume the newline character
 
@@ -48,7 +53,7 @@ public class Main {
                             System.out.print("Enter email: ");
                             String regEmail = scanner.nextLine();
 
-                            int maxUsers = 10; // Set your registration limit here
+                            int maxUsers = 10;
 
                             boolean registrationResult = registrationManager.registerUser(regUsername, regPassword, regEmail, maxUsers);
 
@@ -61,8 +66,8 @@ public class Main {
                                     System.out.println("User registration failed. Registration limit reached or other error.");
                                 }
                             }
+                            break;
                         }
-
                         case 2 -> {
                             // User Login
                             System.out.println("User Login");
@@ -74,12 +79,14 @@ public class Main {
                             boolean loginResult = loginManager.loginUser(loginUsername, loginPassword);
 
                             if (loginResult) {
+                                AuthManager.setAuthToken(AuthHandler.generateToken(loginUsername));
+                                AuthManager.setLoggedIn(true);
                                 System.out.println("Login successful!");
+                                loggedInUsername = loginUsername; // Set the logged-in username
                             } else {
                                 System.out.println("Login failed. Invalid username or password.");
                             }
                         }
-
                         case 3 -> {
                             // Delete User
                             System.out.println("Delete User");
@@ -95,30 +102,57 @@ public class Main {
                             } else {
                                 System.out.println("User deletion failed. User not found or other error.");
                             }
+                            break;
                         }
-
                         case 4 -> {
                             // Exit the program
                             System.out.println("Exiting Attendance Tracker.");
-                            databaseHandler.close();
                             scanner.close();
                             System.exit(0);
                         }
-
                         default -> System.out.println("Invalid choice. Please select a valid option.");
                     }
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid input. Please enter a valid number.");
-                    scanner.nextLine(); // Clear the invalid input
+                } else {
+                    // Display the menu for logged-in users
+                    System.out.println("Logged in as: " + loggedInUsername);
+                    System.out.println("1. Access Authentication Token");
+                    System.out.println("2. Generate QR");
+                    System.out.println("3. Scan QR");
+                    System.out.println("4. Logout");
+                    System.out.print("Enter your choice: ");
+
+                    int loggedInChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline character
+
+                    switch (loggedInChoice) {
+                        case 1 -> {
+                            // Access Authentication Token
+                            String authToken = AuthManager.getAuthToken();
+                            System.out.println("Accessing Authentication Token: " + authToken);
+                        }
+                        case 2 -> {
+                            // Generate QR
+                            // Add your QR code generation code here
+                            System.out.println("Generating QR...");
+                        }
+                        case 3 -> {
+                            // Scan QR
+                            // Add your QR code scanning code here
+                            System.out.println("Scanning QR...");
+                        }
+                        case 4 -> {
+                            // Logout
+                            AuthManager.setAuthToken(null);
+                            AuthManager.setLoggedIn(false);
+                            System.out.println("Logged out.");
+                        }
+                        default -> System.out.println("Invalid choice. Please select a valid option.");
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    private static boolean deleteUser(String username) {
-        // Implement your user deletion logic here (as described in the previous answer)
-        return false; // Return true if user deletion was successful, false otherwise
-    }
 }
+
