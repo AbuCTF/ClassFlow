@@ -7,6 +7,7 @@ C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancet
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\attendance\AttendanceManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\qr\QRCodeUtil.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\user\UserLoginManager.java
+C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\ui\gui\UserMenuGUI.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\app\Main.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\auth\AuthManager.java
 C:\Documents2\Programming\Java\ClassFlow\src\main\java\com\mycompany\attendancetracker\data\DatabaseHandler.java

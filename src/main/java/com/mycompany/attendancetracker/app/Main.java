@@ -54,10 +54,12 @@ public class Main {
                             String regPassword = scanner.nextLine();
                             System.out.print("Enter email: ");
                             String regEmail = scanner.nextLine();
+                            System.out.print("Enter role (user or student): ");
+                            String regRole = scanner.nextLine(); // Allow the user to enter their role
 
                             int maxUsers = 10;
 
-                            boolean registrationResult = registrationManager.registerUser(regUsername, regPassword, regEmail, maxUsers);
+                            boolean registrationResult = registrationManager.registerUser(regUsername, regPassword, regEmail, regRole, maxUsers);
 
                             if (registrationResult) {
                                 System.out.println("User registered successfully!");
@@ -70,6 +72,7 @@ public class Main {
                             }
                             break;
                         }
+
                         case 2 -> {
                             // User Login
                             System.out.println("User Login");

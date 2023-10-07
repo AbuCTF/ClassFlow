@@ -22,24 +22,28 @@ import java.util.regex.Pattern;
 
 public class UserRegistrationManager {
 
-    public boolean registerUser(String username, String password, String email, int maxUsers) {
-        if (isUsernameValid(username) && isPasswordValid(password) && isEmailValid(email)) {
-            if (countRegisteredUsers() >= maxUsers) {
-                return false; // Registration limit reached
-            }
-
-            if (isCommonPassword(password)) {
-                return false; // Common password, registration failed
-            }
-
-            String hashedPassword = hashAndSaltPassword(password);
-
-            if (insertUserIntoDatabase(username, hashedPassword, email)) {
-                return true; // Registration successful
-            }
+    public boolean registerUser(String username, String password, String email, String role, int maxUsers) {
+    if (isUsernameValid(username) && isPasswordValid(password) && isEmailValid(email) && isValidRole(role)) {
+        if (countRegisteredUsers() >= maxUsers) {
+            return false; // Registration limit reached
         }
 
-        return false; // Registration failed
+        if (isCommonPassword(password)) {
+            return false; // Common password, registration failed
+        }
+
+        String hashedPassword = hashAndSaltPassword(password);
+
+        if (insertUserIntoDatabase(username, hashedPassword, email, role)) {
+            return true; // Registration successful
+        }
+    }
+
+    return false; // Registration failed
+}
+    
+    private boolean isValidRole(String role) {
+        return "user".equalsIgnoreCase(role) || "student".equalsIgnoreCase(role);
     }
 
     public boolean deleteUserWithConfirmation(String username, String adminPassword) {
@@ -100,13 +104,14 @@ public class UserRegistrationManager {
         return BCrypt.hashpw(password, salt);
     }
 
-    private boolean insertUserIntoDatabase(String username, String password, String email) {
+    private boolean insertUserIntoDatabase(String username, String password, String email, String role) {
         try (Connection connection = DatabaseConnector.connect()) {
-            String insertQuery = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+            String insertQuery = "INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)";
             try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
                 insertStatement.setString(1, username);
                 insertStatement.setString(2, password);
                 insertStatement.setString(3, email);
+                insertStatement.setString(4, role);
                 int rowsAffected = insertStatement.executeUpdate();
                 return rowsAffected == 1;
             }

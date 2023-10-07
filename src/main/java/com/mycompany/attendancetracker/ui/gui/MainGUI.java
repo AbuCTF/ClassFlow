@@ -50,10 +50,16 @@ public class MainGUI extends Application {
         TextField regEmailInput = new TextField();
         GridPane.setConstraints(regEmailInput, 1, 2);
 
-        Button registerButton = new Button("Register");
-        GridPane.setConstraints(registerButton, 1, 3);
+        Label regRoleLabel = new Label("Role:");
+        GridPane.setConstraints(regRoleLabel, 0, 3);
+        ComboBox<String> regRoleInput = new ComboBox<>();
+        regRoleInput.getItems().addAll("user", "student");
+        GridPane.setConstraints(regRoleInput, 1, 3);
 
-        registrationForm.getChildren().addAll(regUsernameLabel, regUsernameInput, regPasswordLabel, regPasswordInput, regEmailLabel, regEmailInput, registerButton);
+        Button registerButton = new Button("Register");
+        GridPane.setConstraints(registerButton, 1, 4);
+
+        registrationForm.getChildren().addAll(regUsernameLabel, regUsernameInput, regPasswordLabel, regPasswordInput, regEmailLabel, regEmailInput, regRoleLabel, regRoleInput, registerButton);
 
         // Create a login form
         GridPane loginForm = new GridPane();
@@ -115,7 +121,8 @@ public class MainGUI extends Application {
             String username = regUsernameInput.getText();
             String password = regPasswordInput.getText();
             String email = regEmailInput.getText();
-            boolean registrationResult = registerUser(username, password, email);
+            String role = regRoleInput.getValue();
+            boolean registrationResult = registerUser(username, password, email, role);
             showRegistrationResultAlert(registrationResult);
         });
 
@@ -135,22 +142,37 @@ public class MainGUI extends Application {
         primaryStage.show();
     }
 
-    private boolean registerUser(String username, String password, String email) {
+    private boolean registerUser(String username, String password, String email, String role) {
         UserRegistrationManager registrationManager = new UserRegistrationManager();
         int maxUsers = 10; // Set your registration limit here
 
-        return registrationManager.registerUser(username, password, email, maxUsers);
+        return registrationManager.registerUser(username, password, email, role, maxUsers);
     }
 
     private boolean loginUser(String username, String password) {
         UserLoginManager loginManager = new UserLoginManager();
-        return loginManager.loginUser(username, password);
+        boolean loginResult = loginManager.loginUser(username, password);
+
+        if (loginResult) {
+            // Login successful, open the UserMenuGUI
+            UserMenuGUI userMenuGUI = new UserMenuGUI();
+            userMenuGUI.start(new Stage());
+        }
+
+        return loginResult;
     }
 
+
     private boolean deleteUser(String username) {
-        // Implementation of user deletion logic
-        // You can call your delete user logic here
-        return false; // Update the return value based on the actual deletion result
+        // Replace this with your actual user deletion logic
+        UserRegistrationManager registrationManager = new UserRegistrationManager();
+
+        // Here, we'll assume that you have a method in your UserRegistrationManager class
+        // that handles user deletion. You should replace this with the actual method.
+
+        boolean deleteResult = registrationManager.deleteUserWithConfirmation(username, "adminPassword");
+
+        return deleteResult;
     }
 
     private void showRegistrationResultAlert(boolean registrationResult) {
@@ -187,3 +209,4 @@ public class MainGUI extends Application {
         alert.showAndWait();
     }
 }
+

@@ -1,3 +1,4 @@
+com\mycompany\attendancetracker\ui\gui\UserMenuGUI.class
 com\mycompany\attendancetracker\shared\AppConfig.class
 com\mycompany\attendancetracker\ui\adapters\AttendanceListAdapter.class
 com\mycompany\attendancetracker\ui\activities\SettingsActivity.class
