@@ -9,67 +9,86 @@
  */
 package com.mycompany.attendancetracker.qr;
 
-import com.google.zxing.*;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Scanner;
+import java.util.Hashtable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 
 public class QRCodeScanner {
-    public static void main(String[] args) throws ChecksumException, FormatException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the path to the QR code image: ");
         String imagePath = scanner.nextLine();
-        //scanner.close();
 
-        try {
-            System.out.println("Scanning QR code...");
-            FileInputStream inputStream = new FileInputStream(new File(imagePath));
-            BufferedImage bufferedImage = ImageIO.read(inputStream);
-            LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+        System.out.print("Enter the session ID: ");
+        String sessionID = scanner.nextLine();
 
-            QRCodeReader reader = new QRCodeReader();
-            Result result = reader.decode(bitmap);
+        // Read session information from the session_info.txt file
+        String sessionInfo = readSessionInfoFromFile("session_info.txt");
 
-            String scannedContent = result.getText();
+        // Extract Session ID, UUID, Start Timestamp, and Duration
+        String[] sessionData = sessionInfo.split(":");
+        String storedSessionID = sessionData[0];
+        String storedUUID = sessionData[1];
+        long startTime = Long.parseLong(sessionData[2]);
+        long duration = Long.parseLong(sessionData[3]);
 
-            // Split the scanned content into its components
-            String[] components = scannedContent.split("\\|");
-            if (components.length == 1) {
-                String secretKey = components[0];
+        // Verify the Session ID
+        if (sessionID.equals(storedSessionID)) {
+            // Verify the QR code contents
+            if (verifyQRCode(imagePath, storedUUID)) {
+                long currentTime = System.currentTimeMillis();
 
-                String expectedSecretKey = readSecretKeyFromFile("C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\files\\secret_key.txt");
-
-                if (secretKey.equals(expectedSecretKey)) {
-                    System.out.println("QR code successfully verified. Content matches the secret key.");
+                // Verify that the session is within its duration
+                if (currentTime >= startTime && currentTime <= startTime + duration) {
+                    // Session is valid, record attendance or perform the required action
+                    System.out.println("Attendance recorded for Session ID: " + sessionID);
                 } else {
-                    System.out.println("QR code verification failed. Content does not match the secret key.");
+                    System.out.println("QR code has expired. Session duration has ended.");
                 }
             } else {
-                System.out.println("Invalid QR code content format.");
+                System.out.println("QR code contents do not match the session.");
             }
-        } catch (NotFoundException | IOException e) {
-            System.out.println("QR code verification failed. An error occurred.");
-            e.printStackTrace();
+        } else {
+            System.out.println("Invalid session ID.");
         }
     }
 
-    private static String readSecretKeyFromFile(String filePath) {
+    private static String readSessionInfoFromFile(String filePath) {
         try {
             return new String(Files.readAllBytes(Paths.get(filePath)));
         } catch (IOException e) {
-            System.out.println("QR code verification failed. An error occurred while reading the secret key file.");
+            System.out.println("Failed to read session information from the file.");
             e.printStackTrace();
-            return null;
         }
+        return "";
+    }
+
+    private static boolean verifyQRCode(String imagePath, String expectedUUID) {
+        try {
+            BufferedImage image = ImageIO.read(new File(imagePath));
+            BufferedImageLuminanceSource source = new BufferedImageLuminanceSource(image);
+            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+            Result result = new MultiFormatReader().decode(bitmap);
+
+            String qrCodeContent = result.getText();
+
+            // Verify that the QR code content matches the expected UUID
+            return qrCodeContent.equals(expectedUUID);
+        } catch (Exception e) {
+            System.out.println("Failed to verify QR code.");
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
-
-

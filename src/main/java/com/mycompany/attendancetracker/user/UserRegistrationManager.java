@@ -18,29 +18,33 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class UserRegistrationManager {
 
     public boolean registerUser(String username, String password, String email, String role, int maxUsers) {
-    if (isUsernameValid(username) && isPasswordValid(password) && isEmailValid(email) && isValidRole(role)) {
-        if (countRegisteredUsers() >= maxUsers) {
-            return false; // Registration limit reached
+        if (isUsernameValid(username) && isPasswordValid(password) && isEmailValid(email) && isValidRole(role)) {
+            if (countRegisteredUsers() >= maxUsers) {
+                return false; // Registration limit reached
+            }
+
+            if (isCommonPassword(password)) {
+                return false; // Common password, registration failed
+            }
+
+            String hashedPassword = hashAndSaltPassword(password);
+
+            // Generate a unique ID for the new user
+            String userId = username.substring(0, 2).toLowerCase() + UUID.randomUUID().toString();
+
+            if (insertUserIntoDatabase(userId, username, hashedPassword, email, role)) {
+                return true; // Registration successful
+            }
         }
 
-        if (isCommonPassword(password)) {
-            return false; // Common password, registration failed
-        }
-
-        String hashedPassword = hashAndSaltPassword(password);
-
-        if (insertUserIntoDatabase(username, hashedPassword, email, role)) {
-            return true; // Registration successful
-        }
+        return false; // Registration failed
     }
-
-    return false; // Registration failed
-}
     
     private boolean isValidRole(String role) {
         return "user".equalsIgnoreCase(role) || "student".equalsIgnoreCase(role);
@@ -104,14 +108,15 @@ public class UserRegistrationManager {
         return BCrypt.hashpw(password, salt);
     }
 
-    private boolean insertUserIntoDatabase(String username, String password, String email, String role) {
+    private boolean insertUserIntoDatabase(String userId, String username, String password, String email, String role) {
         try (Connection connection = DatabaseConnector.connect()) {
-            String insertQuery = "INSERT INTO users (username, password, email, role) VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO users (user_id, username, password, email, role) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-                insertStatement.setString(1, username);
-                insertStatement.setString(2, password);
-                insertStatement.setString(3, email);
-                insertStatement.setString(4, role);
+                insertStatement.setString(1, userId);
+                insertStatement.setString(2, username);
+                insertStatement.setString(3, password);
+                insertStatement.setString(4, email);
+                insertStatement.setString(5, role);
                 int rowsAffected = insertStatement.executeUpdate();
                 return rowsAffected == 1;
             }
