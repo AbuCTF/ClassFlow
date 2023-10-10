@@ -83,6 +83,7 @@ ClassFlow offers a range of powerful features to streamline attendance tracking:
 - **Advanced Encryption Standard (AES):** AES is a widely used encryption algorithm.
 - **JavaFX:** JavaFX is a software platform for creating and delivering desktop applications, as well as rich web applications that can run across a wide variety of devices.
 - **JWT (JSON Web Token):** SON Web Token is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims.
+- **Apache Commons DBCP (Database Connection Pooling):** Connection pool like DBCP is beneficial when your application requires frequent database interactions, as it helps reduce the overhead of opening and closing database connections.
 
 ## Customization
 
@@ -117,6 +118,9 @@ ClassFlow is designed to be highly customizable. You can tailor the app to your 
 
 - [JWT ](https://github.com/auth0/java-jwt)
   - JSON Web Token is a proposed Internet standard for creating data with optional signature and/or optional encryption whose payload holds JSON that asserts some number of claims.
+
+- [MVN Repo](https://mvnrepository.com/)
+  - A Maven repository provides a standard for storing and serving binary software.
 
 ## Contributing
 
