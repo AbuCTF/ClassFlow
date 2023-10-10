@@ -22,19 +22,35 @@ public class DatabaseConnector {
     // Establish a database connection
     public static Connection connect() {
         try {
-            return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            connection.setAutoCommit(false);  // Disable auto-commit
+            return connection;
         } catch (SQLException e) {
             throw new RuntimeException("Failed to connect to the database.");
         }
     }
 
-    // Close the database connection
+    // Commit and close the database connection
     public static void close(Connection connection) {
         try {
             if (connection != null) {
+                connection.commit(); // Commit any pending changes
                 connection.close();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Rollback and close the database connection
+    public static void rollbackAndClose(Connection connection) {
+        try {
+            if (connection != null) {
+                connection.rollback(); // Roll back changes
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

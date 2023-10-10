@@ -3,6 +3,7 @@ com\mycompany\attendancetracker\shared\AppConfig.class
 com\mycompany\attendancetracker\ui\adapters\AttendanceListAdapter.class
 com\mycompany\attendancetracker\ui\activities\SettingsActivity.class
 com\mycompany\attendancetracker\qr\QRCodeGenerator.class
+com\mycompany\attendancetracker\attendance\AttendanceManager$UserInfo.class
 com\mycompany\attendancetracker\ui\activities\ViewAttendanceActivity.class
 com\mycompany\attendancetracker\ui\fragments\UserListFragment.class
 com\mycompany\attendancetracker\qr\QRCodeUtil.class

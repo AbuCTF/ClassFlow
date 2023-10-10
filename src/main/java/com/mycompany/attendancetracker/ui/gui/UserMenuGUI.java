@@ -76,12 +76,8 @@ public class UserMenuGUI extends Application {
         });
 
         scanQRButton.setOnAction((var e) -> {
-            try {
-                // Implement code to scan QR code
-                QRCodeScanner.main(new String[]{});
-            } catch (ChecksumException | FormatException ex) {
-                Logger.getLogger(UserMenuGUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            // Implement code to scan QR code
+            QRCodeScanner.main(new String[]{});
         });
 
         logoutButton.setOnAction(e -> {
