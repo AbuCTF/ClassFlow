@@ -27,6 +27,12 @@ public class AttendanceRecord {
         AttendanceManager.UserInfo verifiedUserInfo = attendanceManager.verifyUserPassword(userInfo.username, password);
 
         if (verifiedUserInfo != null) {
+            // Combine userInfo and verifiedUserInfo
+            verifiedUserInfo.userDepartment = userInfo.userDepartment;
+            verifiedUserInfo.subject = userInfo.subject;
+            verifiedUserInfo.sessionID = userInfo.sessionID;
+            verifiedUserInfo.attendanceTimestamp = userInfo.attendanceTimestamp;
+
             System.out.println("User verified. Attempting to record attendance...");
 
             // Insert attendance record
@@ -37,4 +43,5 @@ public class AttendanceRecord {
             System.out.println("User verification failed. Attendance not recorded.");
         }
     }
+
 }

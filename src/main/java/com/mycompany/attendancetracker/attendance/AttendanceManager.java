@@ -28,10 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AttendanceManager {
-    
     private String sessionInfoFilePath;
-    private Properties properties;  // Add a member variable for properties
-
+        
     public static class UserInfo {
         String userId;
         String userDepartment;
@@ -68,21 +66,33 @@ public class AttendanceManager {
         // Load the properties
         Properties properties = new Properties();
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config/config.properties")) {
-            properties.load(input);
+            if (input != null) {
+                properties.load(input);
+            } else {
+                System.err.println("Config file not found.");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             // Handle the exception appropriately
         }
-
-        // Now, you can get the session info file path
-        sessionInfoFilePath = properties.getProperty("sessionInfoFilePath");
+        
+        // Read session information from the session_info.txt file
+        String sessionInfoFilePath = properties.getProperty("sessionInfoFilePath");
         String sessionInfo = readSessionInfoFromFile(sessionInfoFilePath);
 
-        String[] sessionInfoParts = sessionInfo.split(":");
-        String sessionID = sessionInfoParts[0];
-        String attendanceTimestamp = sessionInfoParts[3];
+        // Extract Session ID, Start Timestamp
+        String[] sessionData = sessionInfo.split(":");
+        String sessionID = sessionData[0];
+        long attendanceTimestamp = Long.parseLong(sessionData[2]);
+        
+        // Convert attendanceTimestamp to String
+        String attendanceTimestampString = String.valueOf(attendanceTimestamp);
 
-        return new UserInfo(userId, username, userDepartment, subject, sessionID, attendanceTimestamp);
+        // Debug: Print the extracted values
+        System.out.println("Extracted Session ID: " + sessionID);
+        System.out.println("Extracted attendanceTimestamp: " + attendanceTimestampString);
+
+        return new UserInfo(userId, username, userDepartment, subject, sessionID, attendanceTimestampString);
     }   
 
 
@@ -113,24 +123,34 @@ public class AttendanceManager {
                  PreparedStatement insertStatement = connection.prepareStatement(
                      "INSERT INTO attendance (user_id, username, user_department, subject, session_id, attendance_timestamp) VALUES (?, ?, ?, ?, ?, ?)")) {
 
+                System.out.println("user_id: " + userInfo.userId);
+                System.out.println("username: " + userInfo.username);
+                System.out.println("user_department: " + userInfo.userDepartment);
+                System.out.println("subject: " + userInfo.subject);
+                System.out.println("session_id: " + userInfo.sessionID);
+                System.out.println("attendance_timestamp: " + userInfo.attendanceTimestamp);
+
+                // Now set the values in the correct order
                 insertStatement.setString(1, userInfo.userId);
                 insertStatement.setString(2, userInfo.username);
+
                 if (userInfo.userDepartment != null) {
                     insertStatement.setString(3, userInfo.userDepartment);
                 } else {
                     insertStatement.setNull(3, java.sql.Types.VARCHAR); // Handle null user_department
                 }
+
                 if (userInfo.subject != null) {
                     insertStatement.setString(4, userInfo.subject);
                 } else {
                     insertStatement.setNull(4, java.sql.Types.VARCHAR); // Handle null subject
                 }
+
                 insertStatement.setString(5, userInfo.sessionID);
 
                 if (userInfo.attendanceTimestamp != null) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    java.util.Date parsedDate = dateFormat.parse(userInfo.attendanceTimestamp);
-                    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                    long attendanceTimestamp = Long.parseLong(userInfo.attendanceTimestamp);
+                    Timestamp timestamp = new Timestamp(attendanceTimestamp);
                     insertStatement.setTimestamp(6, timestamp);
                 } else {
                     insertStatement.setNull(6, java.sql.Types.TIMESTAMP); // Handle null attendance_timestamp
@@ -142,45 +162,11 @@ public class AttendanceManager {
                 System.out.println("Attendance recorded in the database.");
             } catch (SQLException e) {
                 e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         } else {
             System.out.println("Password verification failed. Attendance not recorded.");
         }
     }
-
-    public static void main(String[] args) {
-        Properties properties = new Properties();
-        try (InputStream input = AttendanceManager.class.getClassLoader().getResourceAsStream("config.properties")) {
-            properties.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Use the class member variable
-        AttendanceManager attendanceManager = new AttendanceManager();
-        attendanceManager.sessionInfoFilePath = properties.getProperty("C:\\Documents2\\Programming\\Java\\ClassFlow\\src\\main\\resources\\files\\UUID\\session_info.txt");
-
-        UserInfo userInfo = attendanceManager.collectUserInfo();
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter your password: ");
-        String password = scanner.nextLine();  // Ask for and read the password
-
-        UserInfo verifiedUserInfo = attendanceManager.verifyUserPassword(userInfo.username, password);
-
-        if (verifiedUserInfo != null) {
-            System.out.println("User verified. Attempting to record attendance...");
-            attendanceManager.insertAttendanceRecord(verifiedUserInfo);
-            System.out.println("Attendance recorded successfully.");
-        } else {
-            System.out.println("User verification failed. Attendance not recorded.");
-        }
-    }
-
     
     private String readSessionInfoFromFile(String filePath) {
         try {

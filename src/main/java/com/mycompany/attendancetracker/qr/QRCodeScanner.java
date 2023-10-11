@@ -88,7 +88,7 @@ public class QRCodeScanner {
                 if (currentTime >= startTime && currentTime <= startTime + duration) {
                     // Session is valid, record attendance using the AttendanceManager
                     AttendanceRecord attendanceRecord = new AttendanceRecord();
-                        attendanceRecord.recordAttendance();
+                    attendanceRecord.recordAttendance();
                 } else {
                     System.out.println("QR code has expired. Session duration has ended.");
                 }
